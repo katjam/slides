@@ -164,6 +164,32 @@ aFunctionWithManySteps data =
 """
                 ]
               )
+            , ( False
+              , [ slideHeading "Syntax"
+                , item (h3 [] [ text "Comments and local functions" ])
+                , code "elm" """
+-- A single line comment
+
+{-
+A
+multi
+line
+comment
+-}
+
+myFunction : String
+myFunction =
+    let
+        aString = "Hello"
+
+        aLongerString: String
+        aLongerString = aString ++ " World"
+    in
+
+    aLongerString
+"""
+                ]
+              )
             ]
 
         Programs ->
