@@ -90,7 +90,7 @@ subscriptions model =
 -}
 slides : List CustomSlide
 slides =
-    [ WhatIsElm ]
+    [ Contents, WhatIsElm, Syntax, Programs, HtmlAndCss, ErrorsAndDebug, Testing, Tooling ]
         |> List.map (\section -> Exercises.slideContent section)
         |> List.concat
         |> List.map Exercises.paddedSlide
