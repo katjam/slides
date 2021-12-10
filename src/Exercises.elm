@@ -344,21 +344,79 @@ isReasonableAge input =
               , [ slideHeading "Error handling & debugging"
                 , item (h3 [] [ text "Custom Types" ])
                 , code "elm" """
-type MaybeAge
-  = Age Int
-  | InvalidInput
+type Colour
+    = Red
+    | Green
+    | Blue
 
-type User
-  = Regular String Int Location
-  | Visitor String
-  | Anonymous
+type Direction
+  = FromRight Int
+  | FromLeft Int
+  | FromTop
+
+type alias LightModel =
+    { brightness : Int
+    , colour: Colour
+    , direction: Direction
+    }
+
+type RemoteLight
+  = Failure
+  | Loading
+  | Success LightModel
+
+colourToHex : Colour -> String
+colourToHex colour =
+    case colour of
+
+        Red ->
+            "#ff0000"
+
+        Green ->
+            "#00ff00"
+
+        Blue ->
+            "#0000ff"
+
+directionToString : Direction -> String
+directionToString direction =
+    case direction of
+
+        FromRight degrees ->
+            String.fromInt degrees ++ " degrees from the right"
+        
+        FromLeft degrees ->
+            String.fromInt degrees ++ " degrees from the left"
+
+        FromTop ->
+            "from the top"
+
+
+viewShine : RemoteLight -> Html Msg
+viewShine lightData =
+    case lightData of
+
+        Failure ->
+            text "Oh no, we can't find your light"
+
+        Loading ->
+            text "Just waiting for the light..."
+
+        Success aLight ->
+            div [ style "background-color" colourToHex aLight.colour ]
+                [ text "Shining from " ++ directionToString ]
 """
+                ]
+              )
+            , ( False
+              , [ slideHeading "Error handling & debugging"
                 , item (h3 [] [ text "Debug" ])
                 , bullets
                     [ bullet "Debug.toString anything"
                     , bullet "Debug.log \"My value\" value"
                     , bullet "Debug.todo \"Add more code later\""
                     ]
+                , item (img [ src "/src/images/debugger.png", style "width" "80%" ] [])
                 ]
               )
             ]
@@ -370,6 +428,7 @@ type User
                     [ bullet "elm-format"
                     , bullet "elm-analyse"
                     , bullet "elm-review"
+                    , bullet "elm-live"
                     , bulletLink "ellie" "https://ellie-app.com/bJSMQz9tydqa1"
                     ]
                 ]
